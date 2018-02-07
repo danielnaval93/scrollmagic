@@ -1,0 +1,262 @@
+<html>
+	<head>
+		<title>Story by HTML5 UP</title>
+		<meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="stylesheet" href="main.css" type="text/css">
+        <!-- TweenMax includes TweenLite, TimelineLite, TimelineMax, EasePack,  RoundPropsPlugin and CSSPlugin -->
+        <script type="text/javascript" src="TweenMax.min.js"></script>
+        <script type="text/javascript" src="ScrollMagic.js"></script>
+        <script type="text/javascript" src="animation.gsap.js"></script>
+        <script type="text/javascript" src="debug.addIndicators.js"></script>
+        <script type="text/javascript" src="jquery-3.3.1.min.js"></script>
+		<script type="text/javascript" src="scroll.js"></script>
+	</head>
+	<body>
+        <div class="scrollContent">
+            <section class="demo">
+                <div class="spacer s6"></div>
+                <div id="trigger1" class="spacer s0"></div>
+                <div id="animate1" class="box2 skin">
+                    <p>You wouldn't like me, when I'm angry!</p>
+                </div>
+                <div class="spacer s2"></div>
+            </section>
+            <section class="demo">
+                <div class="spacer s1"></div>
+                <div id="trigger2" class="spacer s1"></div>
+                <div class="spacer s0"></div>
+                <div id="animate2" class="box1 black">
+                    <p>Smurf me!</p>
+                </div>
+                <div class="spacer s2"></div>
+            </section>
+
+            <section class="demo">
+                <div class="spacer s2"></div>
+                <div id="trigger3" class="spacer s0"></div>
+                <div id="pin3" class="box2 blue">
+                    <p>Stay where you are (at least for a while).</p>
+                    <a href="#" class="viewsource">view source</a>
+                </div>
+                <div class="spacer s2"></div>
+            </section>
+            <section class="demo">
+                <div class="spacer s2"></div>
+                <div id="trigger4" class="spacer s0"></div>
+                <div id="pin4" class="box2 blue">
+                    <p>Take me with you!</p>
+                    <a href="#" class="viewsource">view source</a>
+                </div>
+                <div class="spacer s2"></div>
+            </section>			
+            <div class="spacer s_viewport"></div>
+
+            <style type="text/css">
+                .panel {
+                    height: 100%;
+                    width: 100%;
+                }
+                .panel.green, .panel.bordeaux {
+                    margin-bottom: 400px
+                }
+            </style>
+            <section class="panel blue">
+                <b>ONE</b>
+            </section>
+            <section class="panel turqoise">
+                <b>TWO</b>
+            </section>
+            <section class="panel green">
+                <b>THREE</b>
+            </section>
+            <section class="panel bordeaux">
+                <b>FOUR</b>
+            </section>
+
+            <!-- <div class="spacer s2"></div>
+            <div id="trigger5" class="spacer s0"></div>
+            <div id="target5" class="box2 blue">
+                <p>Widen the horizon.</p>
+                <a href="#" class="viewsource">view source</a>
+            </div>
+            <div class="spacer s2"></div> -->
+
+            <style type="text/css">
+                .active {
+                    background-color: #307FB5;
+                }
+            </style>
+            <form class="move">
+                <fieldset>
+                    <p id="high1">One</p>
+                    <p id="high2">Two</p>
+                    <p id="high3">Three</p>
+                    <p id="high4">Four</p>
+                </fieldset>
+            </form>
+            <div class="spacer s1" id="sec1">
+                <div class="box2" style="background-color: #8DBBE0;">
+                    <p>One</p>
+                    <a href="#" class="viewsource">view source</a>
+                </div>
+            </div>
+            <div class="spacer s1" id="sec2">
+                <div class="box2" style="background-color: #6AA6D8;">
+                    <p>Two</p>
+                    <a href="#" class="viewsource">view source</a>
+                </div>
+            </div>
+            <div class="spacer s1" id="sec3">
+                <div class="box2" style="background-color: #4E96D1;">
+                    <p>Three</p>
+                    <a href="#" class="viewsource">view source</a>
+                </div>
+            </div>
+            <div class="spacer s1" id="sec4">
+                <div class="box2" style="background-color: #307FB5;">
+                    <p>Four</p>
+                    <a href="#" class="viewsource">view source</a>
+                </div>
+            </div>
+            <div class="spacer s2"></div>
+            <div class="spacer s5"></div>
+
+            <section class="demo">
+                <div class="spacer s0" id="trigger7"></div>
+                <div id="animate7" class="box2 blue">
+                    <p>Just breathe.</p>
+                    <a href="#" class="viewsource">view source</a>
+                </div>
+                <div class="spacer s_viewport"></div>
+
+                <form class="loglevel move">
+                    <fieldset>
+                        <legend>Console Output</legend>
+                        <div>
+                            <input type="checkbox" id="logcontroller" value="1" checked="">
+                            <label for="logcontroller">Controller</label>
+                        </div>
+                        <div>
+                            <input type="checkbox" id="logscene" value="1" checked="">
+                            <label for="logscene">Scene</label>
+                        </div>
+                    </fieldset>
+                </form>
+                <div class="spacer s2"></div>
+                <div id="trigger8" class="spacer s0"></div>
+                <div id="target8" class="box1 green">
+                    <p>I'll be black!</p>
+                    <a href="#" class="viewsource">view source</a>
+                </div>
+                <div class="spacer s2"></div>
+                <div class="spacer s_viewport"></div>
+
+                <div class="spacer s2"></div>
+                <div id="trigger9" class="spacer s0"></div>
+                <div id="customactions">
+                    <label>scroll direction</label>
+                    <code id="scrollDirection"></code>
+                    <br>
+                    <label>state</label>
+                    <code id="state">outside</code>
+                    <br>
+                    <label>last hit</label>
+                    <code id="lastHit">nothing</code>
+                    <br>
+                    <label>progress</label>
+                    <code id="progress">0</code>
+                    <br>
+                    <a href="#" class="viewsource">view source</a>
+                </div>
+                <div class="spacer s2"></div>
+            </section>
+
+
+            <p>Advanced Tweening</p>
+            <section class="demo">
+                <div class="spacer s2"></div>
+                <div id="trigger11" class="spacer s0"></div>
+                <div id="animate11" class="box1 skin" style="left: -100px;">
+                    <p>tick. tack.</p>
+                    <a href="#" class="viewsource">view source</a>
+                </div>
+                <div class="spacer s2"></div>
+            </section>
+            <section class="demo">
+                <div class="spacer s1"></div>
+                <div id="trigger12" class="spacer s1"></div>
+                <div class="spacer s0"></div>
+                <div id="animate12" class="box1 red" style="left: -100px;">
+                    <p>Let's draw!</p>
+                    <a href="#" class="viewsource">view source</a>
+                </div>
+                <div class="spacer s2"></div>
+            </section>
+            <section class="demo">
+                <style type="text/css">
+                    .fish {
+                        min-width: 500px;
+                    }
+                </style>
+                <div class="spacer s2"></div>
+                <div id="trigger13" class="spacer s0"></div>
+                <div id="animate13" class="box2 blue">
+                    <p>I caught a fish THIS big.</p>
+                    <a href="#" class="viewsource">view source</a>
+                </div>
+                <div class="spacer s2"></div>
+            </section>
+            <section class="demo" style="overflow-x: hidden">
+                <div class="spacer s1"></div>
+                <div id="trigger14" class="spacer s1"></div>
+                <div class="spacer s0"></div>
+                <div class="animate14 box2 black outline">
+                    <p>Tchoo Tchoo!</p>
+                    <a href="#" class="viewsource">view source</a>
+                </div>
+                <div class="animate14 box2 black outline"></div>
+                <div class="animate14 box2 black outline"></div>
+                <div class="animate14 box2 black outline"></div>
+                <div class="animate14 box2 black outline"></div>
+                <div class="animate14 box2 black outline"></div>
+                <div class="animate14 box2 black outline"></div>
+                <div class="animate14 box2 black outline"></div>
+                <div class="animate14 box2 black outline"></div>
+                <div class="animate14 box2 black outline"></div>
+                <div class="spacer s2"></div>
+            </section>		
+            <div class="spacer s_viewport"></div>
+
+            <p>Section Wipe with TimelineMax</p>
+            <section>
+                <style type="text/css">
+                    #pinContainer {
+                        width: 100%;
+                        height: 100%;
+                        overflow: hidden;
+                    }
+                    .panel2 {
+                        height: 100%;
+                        width: 100%;
+                        position: absolute;
+                    }
+                </style>
+                <div id="pinContainer">
+                    <section class="panel2 blue">
+                        <b>ONE</b>
+                    </section>
+                    <section class="panel2 turqoise">
+                        <b>TWO</b>
+                    </section>
+                    <section class="panel2 green">
+                        <b>THREE</b>
+                    </section>
+                    <section class="panel2 bordeaux">
+                        <b>FOUR</b>
+                    </section>
+                </div>
+            </section>
+        </div>
+    </body>
+</html>
