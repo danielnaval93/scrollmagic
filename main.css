@@ -834,18 +834,21 @@ a.viewsource:before {
 #parallaxContainer .layer1 {
 	height: 100%;
 	text-align: center;
+	background-image: url(./example_parallax_l1.gif);
 }
 #parallaxContainer .layer2 {
 	position: absolute;
 	height: 139px;
 	width: 100%;
-	bottom: 32px
+	bottom: 32px;
+	background-image: url(./example_parallax_l2.png);
 }
 #parallaxContainer .layer3 {
 	position: absolute;
 	height: 32px;
 	width: 100%;
 	bottom: 0px;
+	background-image: url(./example_parallax_l3.gif);
 }
 #parallaxText {
 	width: 0;
@@ -1127,4 +1130,7 @@ github.com style (c) Vasily Polovnyov <vast@whiteants.net>
 }
 .wide {
     width: 4000px;
+}
+.horizontal {
+	width: 40000px;
 }

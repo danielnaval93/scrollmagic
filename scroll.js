@@ -242,20 +242,140 @@
 
 		// define movement of panels
 		var wipeAnimation = new TimelineMax()
-			.fromTo("section.panel2.turqoise", 1, {x: "-100%"}, {x: "0%", ease: Linear.easeNone})  // in from left
-			.fromTo("section.panel2.green",    1, {x:  "100%"}, {x: "0%", ease: Linear.easeNone})  // in from right
-			.fromTo("section.panel2.bordeaux", 1, {y: "-100%"}, {y: "0%", ease: Linear.easeNone}); // in from top
+        .fromTo("section.panel2.turqoise", 1, {x: "-100%"}, {x: "0%", ease: Linear.easeNone})  // in from left
+        .fromTo("section.panel2.green",    1, {x:  "100%"}, {x: "0%", ease: Linear.easeNone})  // in from right
+        .fromTo("section.panel2.bordeaux", 1, {y: "-100%"}, {y: "0%", ease: Linear.easeNone}); // in from top
 
 		// create scene to pin and link animation
 		new ScrollMagic.Scene({
-				triggerElement: "#pinContainer",
-				triggerHook: "onLeave",
-				duration: "300%"
-			})
-			.setPin("#pinContainer")
-			.setTween(wipeAnimation)
-			.addIndicators() // add indicators (requires plugin)
-			.addTo(controller);
+            triggerElement: "#pinContainer",
+            triggerHook: "onLeave",
+            duration: "300%"
+        })
+        .setPin("#pinContainer")
+        .setTween(wipeAnimation)
+        .addIndicators() // add indicators (requires plugin)
+        .addTo(controller);
+            
+        /**Tween drawing an SVG */
+        function pathPrepare ($el) {
+            var lineLength = $el[0].getTotalLength();
+            // for the entire length of the svg path, we will initially draw it as a dashed line...
+            $el.css("stroke-dasharray", lineLength);
+            // and the space length of the dash will be the entire length of the svg path. this hides the line
+            $el.css("stroke-dashoffset", lineLength);
+        }
+    
+        var $word = $("path#word");
+        var $dot = $("path#dot");
+    
+        // prepare SVG
+        pathPrepare($word);
+        pathPrepare($dot);
+    
+        // init controller
+        var controller = new ScrollMagic.Controller();
+    
+        // Tween that reduces the space offset of the dashed line from the entire length of the svg path, to a space offset of 0
+        var tween = new TimelineMax()
+        .add(TweenMax.to($word, 0.9, {strokeDashoffset: 0, ease:Linear.easeNone})) // draw word for 0.9
+        .add(TweenMax.to($dot, 0.1, {strokeDashoffset: 0, ease:Linear.easeNone}))  // draw dot for 0.1
+        .add(TweenMax.to("path", 1, {stroke: "white", ease:Linear.easeNone}), 0);			// change color during the whole thing
+    
+        // build scene
+        var scene = new ScrollMagic.Scene({triggerElement: "#trigger15", duration: 500, tweenChanges: true})
+        .setTween(tween)
+        .addIndicators() // add indicators (requires plugin)
+        .addTo(controller);
+
+        /**Use GSAP's ScrollTo Plugin to trigger ScrollMagic events as the user scrolls to sections of the page */
+        // init controller
+        var controller = new ScrollMagic.Controller();
+
+        // build tween
+        var tween = TweenMax.from("#animate16", 0.5, {autoAlpha: 0, scale: 0.7});
+
+        // build scene
+        var scene = new ScrollMagic.Scene({triggerElement: "a#top", duration: 200, triggerHook: "onLeave"})
+                        .setTween(tween)
+                        .addIndicators() // add indicators (requires plugin)
+                        .addTo(controller);
+
+        // change behaviour of controller to animate scroll instead of jump
+        controller.scrollTo(function (newpos) {
+            TweenMax.to(window, 0.5, {scrollTo: {y: newpos}});
+        });
+
+        //  bind scroll to anchor links
+        $(document).on("click", "a[href^='#']", function (e) {
+            var id = $(this).attr("href");
+            if ($(id).length > 0) {
+                e.preventDefault();
+
+                // trigger scroll
+                controller.scrollTo(id);
+
+                    // if supported by the browser we can even update the URL.
+                if (window.history && window.history.pushState) {
+                    history.pushState("", document.title, id);
+                }
+            }
+        });
+
+        /**Parallax sections */
+        // init controller
+        var controller = new ScrollMagic.Controller({globalSceneOptions: {triggerHook: "onEnter", duration: "200%"}});
+
+        // build scenes
+        new ScrollMagic.Scene({triggerElement: "#parallax1"})
+        .setTween("#parallax1 > div", {y: "80%", ease: Linear.easeNone})
+        .addIndicators()
+        .addTo(controller);
+
+        new ScrollMagic.Scene({triggerElement: "#parallax2"})
+        .setTween("#parallax2 > div", {y: "80%", ease: Linear.easeNone})
+        .addIndicators()
+        .addTo(controller);
+
+        new ScrollMagic.Scene({triggerElement: "#parallax3"})
+        .setTween("#parallax3 > div", {y: "80%", ease: Linear.easeNone})
+        .addIndicators()
+        .addTo(controller);
+
+        /**Inifinite Scrolling */
+        // init controller
+        var controller = new ScrollMagic.Controller();
+
+        // build scene
+        var scene = new ScrollMagic.Scene({triggerElement: ".dynamicContent #loader", triggerHook: "onEnter"})
+                        .addTo(controller)
+                        .on("enter", function (e) {
+                            if (!$("#loader").hasClass("active")) {
+                                $("#loader").addClass("active");
+                                if (console){
+                                    console.log("loading new items");
+                                }
+                                // simulate ajax call to add content using the function below
+                                setTimeout(addBoxes, 1000, 9);
+                            }
+                        });
+
+        // pseudo function to add new content. In real life it would be done through an ajax request.
+        function addBoxes (amount) {
+            for (i=1; i<=amount; i++) {
+                var randomColor = '#'+('00000'+(Math.random()*0xFFFFFF<<0).toString(16)).slice(-6);
+                $("<div></div>")
+                    .addClass("box1")
+                    .css("background-color", randomColor)
+                    .appendTo(".dynamicContent #content");
+            }
+            // "loading" done -> revert to normal state
+            scene.update(); // make sure the scene gets the new start position
+            $("#loader").removeClass("active");
+        }
+
+        // add some boxes to start with.
+        addBoxes(18);
     }
     
 })(jQuery);
